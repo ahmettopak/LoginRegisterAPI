@@ -12,7 +12,7 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 const PORT = process.env.PORT || 5000;
 db();
 app.get('/', (req, res) => {
-    res.json({ message: "deneme deneme" })
+    res.json({ message: "Merhaba" })
 })
 app.use('/', Auth)
 app.listen(PORT, () => {

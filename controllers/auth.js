@@ -5,9 +5,13 @@ const jwt = require('jsonwebtoken')
 const register = async (req, res) => {
     try {
         const { username, email, password } = req.body
-        const user = await Auth.findOne({ email })
-        if (user) {
+        const userEmail = await Auth.findOne({ email })
+        const userName = await Auth.findOne({ username })
+        if (userEmail) {
             return res.status(500).json({ message: "Bu email hesabı zaten bulunmakta !!" })
+        }
+        if (userName) {
+            return res.status(500).json({ message: "Bu Kullanıcı adı zaten bulunmakta !!" })
         }
         if (password.length < 6) {
             return res.status(500).json({ message: "Parolanız 6 karakterden kücük olmamalı..." })
@@ -49,5 +53,7 @@ const login = async (req, res) => {
         return res.status(500).json({ message: error.message })
     }
 }
+
+
 
 module.exports = { register, login }
