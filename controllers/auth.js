@@ -12,10 +12,10 @@ const register = async (req, res) => {
         if (password.length < 6) {
             return res.status(500).json({ message: "Parolanız 6 karakterden kücük olmamalı..." })
         }
-        const passwordHash = await (bcrypt.hashpassword, password)
+        // const passwordHash = await (bcrypt.hashpassword, password)
 
 
-        const newUser = await Auth.create({ username, email, password: passwordHash })
+        const newUser = await Auth.create({ username, email, password })
         const userToken = await jwt.sign({ id: newUser.id }, process.env.SECRET_TOKEN, { expiresIn: '1h' });
         res.status(200).json({
             status: "OK",
@@ -35,9 +35,8 @@ const login = async (req, res) => {
         if (!user) {
             return res.status(500).json({ message: "Böyle bir kullanıcı bulunamadı..." })
         }
-        const passwordHash = await (bcrypt.hashpassword, password)
-
-        if (!user.password == passwordHash) {
+        // const comparePassword = await bcrypt.compare(password, user.password)
+        if (!(password == user.password)) {
             return res.status(500).json({ message: "Parolanız yanlısss...." })
         }
         const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN, { expiresIn: '1h' })
