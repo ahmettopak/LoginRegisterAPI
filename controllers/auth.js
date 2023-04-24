@@ -34,8 +34,8 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
-        const user = await Auth.findOne({ email });
+        const { email, password, username } = req.body;
+        const user = await Auth.findOne({ email, username });
         if (!user) {
             return res.status(500).json({ message: "Böyle bir kullanıcı bulunamadı..." })
         }

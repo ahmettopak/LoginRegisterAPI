@@ -16,5 +16,5 @@ app.get('/', (req, res) => {
 })
 app.use('/', Auth)
 app.listen(PORT, () => {
-    console.log('server is running on port: %s', PORT);
+    console.log('server is running on port: %s', "http://localhost:" + PORT);
 })
