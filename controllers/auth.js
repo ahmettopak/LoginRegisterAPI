@@ -54,6 +54,28 @@ const login = async (req, res) => {
     }
 }
 
+const deleteUser = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+        const user = await Auth.findOne({ email, username });
+        if (!user) {
+            return res.status(500).json({ message: "Böyle bir kullanıcı bulunamadı..." })
+        }
+        if (user.password == password) {
+            await Auth.deleteOne({ email })
+        }
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN, { expiresIn: '1h' })
+        res.status(200).json(
+            status = "OK",
+            user,
+            token
+        )
+    } catch (error) {
+        return res.status(500).json({ message: error.message })
+    }
+}
 
 
-module.exports = { register, login }
+
+
+module.exports = { register, login, deleteUser }
